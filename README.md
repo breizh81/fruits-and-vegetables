@@ -1,5 +1,4 @@
 # 🍎🥕 Fruits and Vegetables
-
 ## 🎯 Goal
 We want to build a service which will take a `request.json` and:
 * Process the file and create two separate collections for `Fruits` and `Vegetables`
@@ -26,34 +25,46 @@ or
 * Timebox your work - we expect that you would spend between 3 and 4 hours.
 * Your code should be tested
 
-## When you are finished
-* Please upload your code to a public git repository (i.e. GitHub, Gitlab)
 
-## 🐳 Docker image
-Optional. Just here if you want to run it isolated.
+## Getting Started
 
-### 📥 Pulling image
-```bash
-docker pull tturkowski/fruits-and-vegetables
-```
+Make sure you have Docker and Docker Compose installed on your machine.
 
-### 🧱 Building image
-```bash
-docker build -t tturkowski/fruits-and-vegetables -f docker/Dockerfile .
-```
+1. **Run the Following Commands**
 
-### 🏃‍♂️ Running container
-```bash
-docker run -it -w/app -v$(pwd):/app tturkowski/fruits-and-vegetables sh 
-```
+   Use the provided Makefile to manage Docker Compose commands. Run the following command to start the project:
+   The commands are with docker compose so if needed you must change
 
-### 🛂 Running tests
-```bash
-docker run -it -w/app -v$(pwd):/app tturkowski/fruits-and-vegetables bin/phpunit
-```
+   ```bash
+   make build
+   make up
+   make install-composer
 
-### ⌨️ Run development server
-```bash
-docker run -it -w/app -v$(pwd):/app -p8080:8080 tturkowski/fruits-and-vegetables php -S 0.0.0.0:8080 -t /app/public
-# Open http://127.0.0.1:8080 in your browser
-```
+2. **RUN tests
+   ```bash
+   make clear-redis
+   make test
+
+## Usage
+
+Once the setup is complete, you can access the following features:
+
+To create a collection and create from  file `request.json`, you can use the following endpoint:
+
+POST : http://127.0.0.1:8000/import -> This will create a collection and add items from the file
+
+GET : http://localhost:8000/products -> This will list all products [possibility to add category filter (category=fruit)]
+
+GET : http://localhost:8000//products/search?query= -> This will get all products that contain the query in their name
+
+GET : http://localhost:8000/products/{id} -> This will list the product by id
+
+DELETE : http://localhost:8000/products/{id} -> This will delete the product by id
+
+POST : http://localhost:8000/products -> This will add a product to the collection
+   ```json
+    "name": "Almond",
+    "quantity": 10,
+    "category": "fruit",
+    "unit": "g"
+    }
